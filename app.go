@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"os"
+	"os/exec"
+	"strings"
 )
 
 func main() {
@@ -15,16 +16,16 @@ func main() {
 	name := os.Args[1]
 
 	if out, err := Dig(name); err != nil {
-		log.Fatalf("Execution failed: %s", err)
+		fmt.Println(err)
+		os.Exit(2)
 	} else {
-		log.Println("Executed %s", out)
+		fmt.Println(out)
 	}
 }
 
 func Dig(arg string) (string, error) {
-	if (len(arg) < 5) {
-		return "", fmt.Errorf("arg is too short")
-	}
-
-	return fmt.Sprintf("dig %s", arg), nil
+	fmt.Printf("Executing $ dig %s\n", arg)
+	args := strings.Fields(arg)
+	out, err := exec.Command("dig", args...).CombinedOutput()
+	return string(out), err
 }
