@@ -8,6 +8,8 @@ This is just an example of something you can create with Go. The project was use
 
 ## Outline
 
+This outline details the Go features the code aims to highlight on each task (represented by a single commit).
+
 ### Let's get it started
 
 - Create folder
