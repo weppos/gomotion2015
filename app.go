@@ -6,7 +6,7 @@ import (
 	"strings"
 	"net/http"
 	"io/ioutil"
-
+	"log"
 )
 
 var (
@@ -17,7 +17,8 @@ var (
 func main() {
 	http.HandleFunc("/", RootHandler)
 
-	fmt.Println(fmt.Sprintf("Listening on %s...", serverPort))
+	log.Println(fmt.Sprintf("Listening on %s...", serverPort))
+
 	err := http.ListenAndServe(":" + serverPort, nil)
 	if err != nil {
 		panic(err)
@@ -25,6 +26,9 @@ func main() {
 }
 
 func RootHandler(res http.ResponseWriter, req *http.Request) {
+	log.Printf("Started %s %s\n", req.Method, req.RequestURI)
+	defer log.Printf("Completed %s %s\n", req.Method, req.RequestURI)
+
 	switch req.Method {
 	case "GET":
 		fmt.Fprintln(res, "Usage: POST / <name>")
@@ -42,7 +46,7 @@ func RootHandler(res http.ResponseWriter, req *http.Request) {
 }
 
 func Dig(arg string) (string, error) {
-	fmt.Printf("Executing $ dig %s\n", arg)
+	log.Printf("Executing $ dig %s\n", arg)
 	args := strings.Fields(arg)
 	out, err := exec.Command("dig", args...).CombinedOutput()
 	return string(out), err
