@@ -13,10 +13,7 @@ func main() {
 	}
 
 	name := os.Args[1]
-	var out string
-	var err error
-
-	out, err = Dig(name)
+	out, err := Dig(name)
 	if err != nil {
 		log.Fatalf("Execution failed: %s", err)
 	} else {
