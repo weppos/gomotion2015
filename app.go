@@ -13,8 +13,8 @@ func main() {
 	}
 
 	name := os.Args[1]
-	out, err := Dig(name)
-	if err != nil {
+
+	if out, err := Dig(name); err != nil {
 		log.Fatalf("Execution failed: %s", err)
 	} else {
 		log.Println("Executed %s", out)
