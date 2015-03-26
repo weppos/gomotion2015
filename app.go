@@ -2,24 +2,23 @@ package main
 
 import (
 	"fmt"
-	"os/exec"
-	"strings"
-	"net/http"
 	"io/ioutil"
 	"log"
+	"net/http"
+	"os/exec"
+	"strings"
 )
 
 var (
 	serverPort = "5000"
 )
 
-
 func main() {
 	http.HandleFunc("/", RootHandler)
 
 	log.Println(fmt.Sprintf("Listening on %s...", serverPort))
 
-	err := http.ListenAndServe(":" + serverPort, nil)
+	err := http.ListenAndServe(":"+serverPort, nil)
 	if err != nil {
 		panic(err)
 	}
