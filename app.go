@@ -2,24 +2,42 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 	"strings"
+	"net/http"
+	"io/ioutil"
+
 )
 
+var (
+	serverPort = "5000"
+)
+
+
 func main() {
-	if (len(os.Args) != 2) {
-		fmt.Println("Usage: app <name>")
-		os.Exit(1)
+	http.HandleFunc("/", RootHandler)
+
+	fmt.Println(fmt.Sprintf("Listening on %s...", serverPort))
+	err := http.ListenAndServe(":" + serverPort, nil)
+	if err != nil {
+		panic(err)
 	}
+}
 
-	name := os.Args[1]
-
-	if out, err := Dig(name); err != nil {
-		fmt.Println(err)
-		os.Exit(2)
-	} else {
-		fmt.Println(out)
+func RootHandler(res http.ResponseWriter, req *http.Request) {
+	switch req.Method {
+	case "GET":
+		fmt.Fprintln(res, "Usage: POST / <name>")
+	case "POST":
+		arg, _ := ioutil.ReadAll(req.Body)
+		out, err := Dig(string(arg))
+		if err != nil {
+			http.Error(res, err.Error(), http.StatusBadRequest)
+		} else {
+			fmt.Fprintln(res, out)
+		}
+	default:
+		http.NotFound(res, req)
 	}
 }
 
