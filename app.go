@@ -3,13 +3,20 @@ package main
 import (
 	"fmt"
 	"log"
+	"os"
 )
 
 func main() {
+	if (len(os.Args) != 2) {
+		fmt.Println("Usage: app <name>")
+		os.Exit(1)
+	}
+
+	name := os.Args[1]
 	var out string
 	var err error
 
-	out, err = Dig("example.com")
+	out, err = Dig(name)
 	if err != nil {
 		log.Fatalf("Execution failed: %s", err)
 	} else {
