@@ -1,6 +1,6 @@
 # gomotion2015
 
-This project was used as a practical introduction to Golang for my talk at [Codemotion 2015](http://rome2015.codemotionworld.com/).
+This project was used as a practical introduction to Golang for [my talk](https://speakerdeck.com/weppos/practical-introduction-to-golang-codemotion-rome-2015) at [Codemotion 2015](http://rome2015.codemotionworld.com/).
 
 The app is not just an example, (believe it or not) it works for real! The app exposes a system binary, for example `dig`, via an HTTP interface.
 
